@@ -222,54 +222,54 @@ print(f"Predicted Energy Consumption: {predicted_energy:.4f}") #prediction value
 
 ######################################################################################################################
 
-# Function to find optimal lamp settings
-# def optimize_lamp_settings(ambient_light, hour, day, min_brightness=5):
-#     best_energy = float('inf')
-#     best_settings = None
-#     # Try different combinations of brightness and color temperature
-#     for brightness in range(min_brightness, 101, 5):  # 5% steps
-#         for color_temp in range(2000, 6501, 500):  # 500K steps
-#             # Calculate energy consumption for each combination
-#             energy = predict_energy_consumption(ambient_light, 1, hour, day, brightness, color_temp)
-#             # Update if better than current best
-#             if energy < best_energy:
-#                 best_energy = energy
-#                 best_settings = (brightness, color_temp)
-#     return best_settings, best_energy
+#Function to find optimal lamp settings
+def optimize_lamp_settings(ambient_light, hour, day, min_brightness=5):
+    best_energy = float('inf')
+    best_settings = None
+    # Try different combinations of brightness and color temperature
+    for brightness in range(min_brightness, 101, 5):  # 5% steps
+        for color_temp in range(2000, 6501, 500):  # 500K steps
+            # Calculate energy consumption for each combination
+            energy = predict_energy_consumption(ambient_light, 1, hour, day, brightness, color_temp)
+            # Update if better than current best
+            if energy < best_energy:
+                best_energy = energy
+                best_settings = (brightness, color_temp)
+    return best_settings, best_energy
 
-# # Test optimization with example scenario
-# ambient_light = 300
-# hour = 20
-# day = 3
-# min_brightness = 5
+# Test optimization with example scenario
+ambient_light = 300
+hour = 20
+day = 3
+min_brightness = 5
 
-# # Get optimal settings and print results
-# optimal_settings, optimal_energy = optimize_lamp_settings(ambient_light, hour, day, min_brightness)
-# print(f"Optimal settings for ambient light {ambient_light}, hour {hour}, day {day}:")
-# print(f"Brightness: {optimal_settings[0]}%, Color Temperature: {optimal_settings[1]}K")
-# print(f"Estimated Energy Consumption: {optimal_energy:.4f}")
+# Get optimal settings and print results
+optimal_settings, optimal_energy = optimize_lamp_settings(ambient_light, hour, day, min_brightness)
+print(f"Optimal settings for ambient light {ambient_light}, hour {hour}, day {day}:")
+print(f"Brightness: {optimal_settings[0]}%, Color Temperature: {optimal_settings[1]}K")
+print(f"Estimated Energy Consumption: {optimal_energy:.4f}")
 
-# # Analyze and print feature importance
-# feature_importance = model.layers[0].get_weights()[0]
-# for feature, importance in zip(features, np.mean(np.abs(feature_importance), axis=1)):
-#     print(f"{feature}: {importance:.4f}")
+# Analyze and print feature importance
+feature_importance = model.layers[0].get_weights()[0]
+for feature, importance in zip(features, np.mean(np.abs(feature_importance), axis=1)):
+    print(f"{feature}: {importance:.4f}")
 
 
 ######################################################################################################################
 
-# # Test model with different scenarios
-# scenarios = [
-#     (100, 8, 1),  # Low light, morning, weekday
-#     (500, 12, 3), # Medium light, noon, midweek
-#     (800, 15, 5), # Bright light, afternoon, Friday
-#     (200, 20, 6)  # Evening, weekend
-# ]
+# Test model with different scenarios
+scenarios = [
+    (100, 8, 1),  # Low light, morning, weekday
+    (500, 12, 3), # Medium light, noon, midweek
+    (800, 15, 5), # Bright light, afternoon, Friday
+    (200, 20, 6)  # Evening, weekend
+]
 
-# # Print recommendations for each scenario
-# print("\nRecommendations for different scenarios:")
-# for ambient_light, hour, day in scenarios:
-#     optimal_settings, optimal_energy = optimize_lamp_settings(ambient_light, hour, day, min_brightness)
-#     print(f"\nScenario: Ambient Light: {ambient_light}, Hour: {hour}, Day: {day}")
-#     print(f"Recommended Brightness: {optimal_settings[0]}%")
-#     print(f"Recommended Color Temperature: {optimal_settings[1]}K")
-#     print(f"Estimated Energy Consumption: {optimal_energy:.4f}")
+# Print recommendations for each scenario
+print("\nRecommendations for different scenarios:")
+for ambient_light, hour, day in scenarios:
+    optimal_settings, optimal_energy = optimize_lamp_settings(ambient_light, hour, day, min_brightness)
+    print(f"\nScenario: Ambient Light: {ambient_light}, Hour: {hour}, Day: {day}")
+    print(f"Recommended Brightness: {optimal_settings[0]}%")
+    print(f"Recommended Color Temperature: {optimal_settings[1]}K")
+    print(f"Estimated Energy Consumption: {optimal_energy:.4f}")
